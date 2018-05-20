@@ -10,11 +10,11 @@ service Roles {
 message EmptyRequest { }
 
 message RolesReply {
-    int32 user_id = 1;
+    repeated Role roles = 1;
 }
 
 message GetUserRoleRequest {
-    repeated Role roles = 1;
+    int32 user_id = 1;
 }
 
 message Role {
