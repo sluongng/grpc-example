@@ -20,7 +20,7 @@ func (s *Server) GetRoles(_ context.Context, _ *pb.EmptyRequest) (*pb.RolesReply
 	}, nil
 }
 
-func (s *Server) GetUserRole(_ context.Context, req *pb.GetUserRoleRequest) (*pb.UserRoleReply, error) {
+func (s *Server) GetUserRoles(_ context.Context, req *pb.GetUserRoleRequest) (*pb.UserRoleReply, error) {
 	roles, ok := s.userRoles[req.UserId]
 	if !ok {
 		return nil, errors.New("user not found")
