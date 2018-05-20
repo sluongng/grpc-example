@@ -1,4 +1,4 @@
-package user_service
+package main
 
 import (
 	pb "github.com/sluongng/grpc-example/role-service/pb"
@@ -11,7 +11,7 @@ import (
 
 type Server struct {
 	userRoles map[int32][]*pb.Role
-	roles []*pb.Role
+	roles     []*pb.Role
 }
 
 func (s *Server) GetRoles(_ context.Context, _ *pb.EmptyRequest) (*pb.RolesReply, error) {
@@ -20,7 +20,7 @@ func (s *Server) GetRoles(_ context.Context, _ *pb.EmptyRequest) (*pb.RolesReply
 	}, nil
 }
 
-func (s *Server) GetUserRole( _ context.Context, req *pb.GetUserRoleRequest) (*pb.UserRoleReply, error) {
+func (s *Server) GetUserRole(_ context.Context, req *pb.GetUserRoleRequest) (*pb.UserRoleReply, error) {
 	roles, ok := s.userRoles[req.UserId]
 	if !ok {
 		return nil, errors.New("user not found")
@@ -28,26 +28,26 @@ func (s *Server) GetUserRole( _ context.Context, req *pb.GetUserRoleRequest) (*p
 
 	return &pb.UserRoleReply{
 		UserId: req.UserId,
-		Roles: roles,
+		Roles:  roles,
 	}, nil
 }
 
 func main() {
 	var (
 		normal = &pb.Role{
-			Id: 1,
+			Id:   1,
 			Name: "normal",
 		}
 		manager = &pb.Role{
-			Id: 1,
+			Id:   1,
 			Name: "manager",
 		}
 		cto = &pb.Role{
-			Id: 1,
+			Id:   1,
 			Name: "CTO",
 		}
 		ceo = &pb.Role{
-			Id: 1,
+			Id:   1,
 			Name: "CEO",
 		}
 	)
@@ -56,7 +56,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to initialize TCP listerner: %v", err)
 	}
-	defer  lis.Close()
+	defer lis.Close()
 
 	server := grpc.NewServer()
 	roleServer := &Server{
